@@ -1,0 +1,17 @@
+# Folders not part of this repository
+github-test-project/
+test-project/
+
+# Node dependencies
+node_modules/
+
+# Environment files
+.env
+.env.*
+
+# Build files
+dist/
+build/
+
+# Foundry dependencies
+slopguard-contracts/lib/
