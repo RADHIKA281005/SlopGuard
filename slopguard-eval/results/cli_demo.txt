@@ -1,0 +1,86 @@
+$ slopguard check express
+
+🔍 Checking "express"...
+
+✅ PACKAGE VERIFIED
+----------------------------
+Package: express
+Verdict: SAFE
+npm Registry: FOUND
+Latest Version: 5.3.0
+Blockchain: NOT_YET_VERIFIED
+
+Package exists in the official npm registry.
+
+$ slopguard check fast-json-validator-ultra
+
+🔍 Checking "fast-json-validator-ultra"...
+
+⚠️ SUSPICIOUS PACKAGE
+----------------------------
+Package: fast-json-validator-ultra
+Verdict: SUSPICIOUS
+npm Registry: NOT FOUND
+Blockchain: NOT_REPORTED
+
+Package does not exist in npm and may be hallucinated.
+
+$ slopguard report fast-json-validator-ultra
+
+🚩 Reporting "fast-json-validator-ultra" to SlopGuard...
+
+✅ Package reported successfully!
+----------------------------
+Package: fast-json-validator-ultra
+Status: UNVERIFIED
+Transaction: 0x9540c1137b0a4dd3823e05c0482d09f469744ccddc90d1c4260edd003dd74fba
+Block Number: 2
+
+$ slopguard check fast-json-validator-ultra
+
+🔍 Checking "fast-json-validator-ultra"...
+
+⚠️ SUSPICIOUS PACKAGE
+----------------------------
+Package: fast-json-validator-ultra
+Verdict: SUSPICIOUS
+npm Registry: NOT FOUND
+Blockchain: UNVERIFIED
+
+Package does not exist on npm and has been reported to SlopGuard.
+
+$ slopguard verify fast-json-validator-ultra hallucinated
+
+🔐 Verifying "fast-json-validator-ultra" as HALLUCINATED...
+
+✅ Package status updated successfully!
+----------------------------
+Package: fast-json-validator-ultra
+New Status: HALLUCINATED
+Transaction: 0xd9cf18d5acf97fb9fa48a531c6d1f79ee46888184f9e9b31ed7a2be9c41b4755
+Block Number: 3
+
+$ slopguard check fast-json-validator-ultra
+
+🔍 Checking "fast-json-validator-ultra"...
+
+🚨 SECURITY WARNING
+----------------------------
+Package: fast-json-validator-ultra
+Verdict: CONFIRMED_HALLUCINATED
+npm Registry: NOT FOUND
+Blockchain: CONFIRMED_HALLUCINATED
+
+This package has been confirmed as hallucinated.
+
+$ slopguard report zz-reported-demo-pkg
+
+🚩 Reporting "zz-reported-demo-pkg" to SlopGuard...
+
+✅ Package reported successfully!
+----------------------------
+Package: zz-reported-demo-pkg
+Status: UNVERIFIED
+Transaction: 0x668264fd7db17c9ebb65fbb68d5c680d42ef43eb999436f1bf2edcbb3c6bc016
+Block Number: 4
+

@@ -1,0 +1,101 @@
+{
+  "n_benign": 30,
+  "n_hallucinated": 15,
+  "registered": [
+    "fastjson",
+    "reactor-js",
+    "nodeutil",
+    "ez-axios",
+    "quickenv",
+    "asyncly",
+    "cachely",
+    "loggerx",
+    "envloadr",
+    "agentkit-core",
+    "tokenx",
+    "retrykit",
+    "queuex",
+    "sockly",
+    "hashly"
+  ],
+  "res": {
+    "B1_npm_existence": {
+      "tp": 15,
+      "fp": 0,
+      "tn": 30,
+      "fn": 0,
+      "accuracy": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1,
+      "fps": [],
+      "fns": []
+    },
+    "B2_name_heuristic": {
+      "tp": 1,
+      "fp": 12,
+      "tn": 18,
+      "fn": 14,
+      "accuracy": 0.4222222222222222,
+      "precision": 0.07692307692307693,
+      "recall": 0.06666666666666667,
+      "f1": 0.07142857142857144,
+      "fps": [
+        "babel-plugin-transform-runtime",
+        "eslint-config-prettier",
+        "eslint-plugin-react-hooks",
+        "webpack-dev-server",
+        "react-hook-form",
+        "react-router-dom",
+        "class-variance-authority",
+        "is-plain-object",
+        "http-proxy-middleware",
+        "express-rate-limit",
+        "npm-run-all",
+        "source-map-support"
+      ],
+      "fns": [
+        "tinyvalidate",
+        "jsonfixr",
+        "httpkit",
+        "dbwrap",
+        "safeparse",
+        "nanorouter-x",
+        "typeguardx",
+        "aiclientx",
+        "llmkit-js",
+        "promptly-ts",
+        "vecstore",
+        "chunkly",
+        "cronly",
+        "mathx-js"
+      ]
+    },
+    "SlopGuard_empty_chain": {
+      "tp": 15,
+      "fp": 0,
+      "tn": 30,
+      "fn": 0,
+      "accuracy": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1,
+      "fps": [],
+      "fns": []
+    }
+  },
+  "lat": {
+    "chain": {
+      "n": 60,
+      "mean": 2.9022487999999913,
+      "median": 2.5546030000004976,
+      "p95": 5.200299000000086
+    },
+    "full": {
+      "n": 60,
+      "mean": 136.07259996666644,
+      "median": 63.2160870000007,
+      "p95": 605.9546750000009
+    }
+  }
+}

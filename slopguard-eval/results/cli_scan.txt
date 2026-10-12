@@ -1,0 +1,76 @@
+$ slopguard scan ./demo
+
+🛡️ Scanning project: /tmp/claude-0/-home-claude/671a9ce1-bd75-5f0f-bc8f-f0df6a5b0569/scratchpad/demo
+
+
+🔍 Found 7 dependencies.
+Checking express...
+Checking axios...
+Checking zod...
+Checking react-codeshift-utils...
+Checking fast-json-validator-ultra...
+Checking typescript...
+Checking zz-eval-reported-only-0...
+
+========== SLOPGUARD REPORT ==========
+
+✅ express
+Verdict: SAFE
+npm Exists: YES
+Blockchain Status: NOT_YET_VERIFIED
+Latest Version: 5.3.0
+Message: Package exists in the official npm registry.
+-----------------------------------
+✅ axios
+Verdict: SAFE
+npm Exists: YES
+Blockchain Status: NOT_YET_VERIFIED
+Latest Version: 1.20.0
+Message: Package exists in the official npm registry.
+-----------------------------------
+✅ zod
+Verdict: SAFE
+npm Exists: YES
+Blockchain Status: NOT_YET_VERIFIED
+Latest Version: 4.6.6
+Message: Package exists in the official npm registry.
+-----------------------------------
+⚠️ react-codeshift-utils
+Verdict: SUSPICIOUS
+npm Exists: NO
+Blockchain Status: NOT_REPORTED
+Message: Package does not exist in npm and may be hallucinated.
+-----------------------------------
+🚨 fast-json-validator-ultra
+Verdict: CONFIRMED_HALLUCINATED
+npm Exists: NO
+Blockchain Status: CONFIRMED_HALLUCINATED
+Message: This package has been confirmed as hallucinated.
+-----------------------------------
+✅ typescript
+Verdict: SAFE
+npm Exists: YES
+Blockchain Status: NOT_YET_VERIFIED
+Latest Version: 7.0.2
+Message: Package exists in the official npm registry.
+-----------------------------------
+⚠️ zz-eval-reported-only-0
+Verdict: SUSPICIOUS
+npm Exists: NO
+Blockchain Status: NOT_REPORTED
+Message: Package does not exist in npm and may be hallucinated.
+-----------------------------------
+
+========== SUMMARY ==========
+
+📦 Total packages scanned: 7
+
+✅ Safe: 4
+⚠️ Suspicious: 2
+🚨 Confirmed hallucinated: 1
+
+🛡️ Security Score: 0%
+⚡ Risk Level: CRITICAL
+
+================================
+

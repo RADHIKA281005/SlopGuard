@@ -1,0 +1,37 @@
+No files changed, compilation skipped
+
+Ran 8 tests for test/PackageRegistry.t.sol:PackageRegistryTest
+[PASS] testAnyoneCanReportPackage() (gas: 126500)
+[PASS] testCannotRegisterDuplicatePackage() (gas: 158855)
+[PASS] testCannotReportDuplicatePackage() (gas: 133835)
+[PASS] testNonOwnerCannotRegisterPackage() (gas: 36765)
+[PASS] testOnlyOwnerCanVerifyReportedPackage() (gas: 198478)
+[PASS] testRegisterPackage() (gas: 147171)
+[PASS] testReportedPackageStartsUnverified() (gas: 113892)
+[PASS] testUpdatePackageStatus() (gas: 171809)
+Suite result: ok. 8 passed; 0 failed; 0 skipped; finished in 5.58ms (3.25ms CPU time)
+
+╭--------------------------------------------------+-----------------+-------+--------+--------+---------╮
+| src/PackageRegistry.sol:PackageRegistry Contract |                 |       |        |        |         |
++========================================================================================================+
+| Deployment Cost                                  | Deployment Size |       |        |        |         |
+|--------------------------------------------------+-----------------+-------+--------+--------+---------|
+| 1135110                                          | 5006            |       |        |        |         |
+|--------------------------------------------------+-----------------+-------+--------+--------+---------|
+|                                                  |                 |       |        |        |         |
+|--------------------------------------------------+-----------------+-------+--------+--------+---------|
+| Function Name                                    | Min             | Avg   | Median | Max    | # Calls |
+|--------------------------------------------------+-----------------+-------+--------+--------+---------|
+| getPackage                                       | 11939           | 11939 | 11939  | 11939  | 2       |
+|--------------------------------------------------+-----------------+-------+--------+--------+---------|
+| getPackageStatus                                 | 6400            | 6400  | 6400   | 6400   | 3       |
+|--------------------------------------------------+-----------------+-------+--------+--------+---------|
+| registerPackage                                  | 25338           | 77705 | 98658  | 118390 | 5       |
+|--------------------------------------------------+-----------------+-------+--------+--------+---------|
+| reportPackage                                    | 25536           | 81740 | 95798  | 95834  | 5       |
+|--------------------------------------------------+-----------------+-------+--------+--------+---------|
+| updatePackageStatus                              | 25328           | 44160 | 53558  | 53594  | 3       |
+╰--------------------------------------------------+-----------------+-------+--------+--------+---------╯
+
+
+Ran 1 test suite in 13.11ms (5.58ms CPU time): 8 tests passed, 0 failed, 0 skipped (8 total tests)

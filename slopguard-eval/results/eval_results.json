@@ -1,0 +1,192 @@
+{
+  "dataset": {
+    "real": 96,
+    "candidates": 110,
+    "hallucinated_404": 107,
+    "candidates_already_registered": 3,
+    "already_registered_names": [
+      "pg-pool-monitor",
+      "graphql-query-batcher",
+      "ws-heartbeat-manager"
+    ]
+  },
+  "exp1": {
+    "n_benign": 96,
+    "n_hallucinated": 107,
+    "B1_npm_existence": {
+      "tp": 107,
+      "fp": 0,
+      "tn": 96,
+      "fn": 0,
+      "accuracy": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+    },
+    "B2_name_heuristic": {
+      "tp": 107,
+      "fp": 0,
+      "tn": 96,
+      "fn": 0,
+      "accuracy": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+    },
+    "SlopGuard_empty_chain": {
+      "tp": 107,
+      "fp": 0,
+      "tn": 96,
+      "fn": 0,
+      "accuracy": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+    },
+    "heuristic_false_positives": [],
+    "heuristic_misses": [],
+    "latency_ms": {
+      "npm_only": {
+        "n": 203,
+        "mean": 136.311479275862,
+        "median": 124.31309200000032,
+        "p95": 248.071907,
+        "min": 30.199154999998427,
+        "max": 1653.5569099999998
+      },
+      "slopguard_full": {
+        "n": 203,
+        "mean": 93.17293440394093,
+        "median": 34.67832600000111,
+        "p95": 323.6267780000053,
+        "min": 27.24930999999924,
+        "max": 1794.2305010000018
+      },
+      "chain_read_only": {
+        "n": 60,
+        "mean": 2.5658816166664717,
+        "median": 2.4349810000057914,
+        "p95": 5.515392999994219,
+        "min": 1.2532929999943008,
+        "max": 7.78961399999389
+      }
+    }
+  },
+  "exp2": [
+    {
+      "coverage_pct": 0,
+      "names_on_chain": 0,
+      "baseline_recall": 0,
+      "slopguard_recall": 0,
+      "benign_false_positives": 0,
+      "verdicts": {
+        "SAFE": 107
+      }
+    },
+    {
+      "coverage_pct": 25,
+      "names_on_chain": 27,
+      "baseline_recall": 0,
+      "slopguard_recall": 0.2523364485981308,
+      "benign_false_positives": 0,
+      "verdicts": {
+        "CONFIRMED_HALLUCINATED": 27,
+        "SAFE": 80
+      }
+    },
+    {
+      "coverage_pct": 50,
+      "names_on_chain": 54,
+      "baseline_recall": 0,
+      "slopguard_recall": 0.5046728971962616,
+      "benign_false_positives": 0,
+      "verdicts": {
+        "CONFIRMED_HALLUCINATED": 54,
+        "SAFE": 53
+      }
+    },
+    {
+      "coverage_pct": 75,
+      "names_on_chain": 80,
+      "baseline_recall": 0,
+      "slopguard_recall": 0.7476635514018691,
+      "benign_false_positives": 0,
+      "verdicts": {
+        "CONFIRMED_HALLUCINATED": 80,
+        "SAFE": 27
+      }
+    },
+    {
+      "coverage_pct": 100,
+      "names_on_chain": 107,
+      "baseline_recall": 0,
+      "slopguard_recall": 1,
+      "benign_false_positives": 0,
+      "verdicts": {
+        "CONFIRMED_HALLUCINATED": 107
+      }
+    }
+  ],
+  "exp2_reported_only": {
+    "n": 20,
+    "verdicts": {
+      "SUSPICIOUS": 20
+    }
+  },
+  "exp3": {
+    "spam_reports": 10,
+    "spam_false_positives": 10,
+    "owner_clear_verdict": "SAFE",
+    "non_owner_verify_blocked": true,
+    "duplicate_report_blocked": true,
+    "safe_onchain_absent_npm": {
+      "verdict": "SUSPICIOUS",
+      "blockchainStatus": "NOT_REPORTED"
+    }
+  },
+  "exp4_gas": [
+    {
+      "name_len": 9,
+      "report_gas": 95702,
+      "verify_gas": 53450,
+      "report_ms": 11.184731000001193,
+      "verify_ms": 9.904648000010638
+    },
+    {
+      "name_len": 17,
+      "report_gas": 95798,
+      "verify_gas": 53546,
+      "report_ms": 11.944864999997662,
+      "verify_ms": 12.449624000000767
+    },
+    {
+      "name_len": 33,
+      "report_gas": 140790,
+      "verify_gas": 54161,
+      "report_ms": 17.062767999988864,
+      "verify_ms": 13.695445000004838
+    },
+    {
+      "name_len": 65,
+      "report_gas": 163782,
+      "verify_gas": 54968,
+      "report_ms": 19.438534999993863,
+      "verify_ms": 13.177842999997665
+    },
+    {
+      "name_len": 129,
+      "report_gas": 209767,
+      "verify_gas": 56582,
+      "report_ms": 10.956130999999004,
+      "verify_ms": 9.827426999996533
+    }
+  ],
+  "exp4_report_latency_ms": {
+    "n": 20,
+    "mean": 12.40818655000039,
+    "median": 11.713392999998177,
+    "p95": 21.578125,
+    "min": 6.9606670000066515,
+    "max": 21.578125
+  }
+}
