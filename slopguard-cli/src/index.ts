@@ -8,6 +8,9 @@ import {
     updatePackageStatus
 } from "./contract.js";
 
+import { suggestAlternatives } from "./ai/alternativeSuggester";
+import { verifyAlternatives } from "./ai/alternativeVerifier";
+
 
 const program = new Command();
 
@@ -29,23 +32,29 @@ program
         console.log(`\n🔍 Checking "${packageName}"...\n`);
 
         try {
+
             const result = await analyzePackage(packageName);
 
             if (result.verdict === "SAFE") {
+
                 console.log("✅ PACKAGE VERIFIED");
 
             } else if (
                 result.verdict === "CONFIRMED_HALLUCINATED"
             ) {
+
                 console.log("🚨 SECURITY WARNING");
 
             } else {
+
                 console.log("⚠️ SUSPICIOUS PACKAGE");
             }
 
             console.log("----------------------------");
 
-            console.log(`Package: ${result.packageName}`);
+            console.log(
+                `Package: ${result.packageName}`
+            );
 
             console.log(
                 `Verdict: ${result.verdict}`
@@ -60,6 +69,7 @@ program
             );
 
             if (result.latestVersion) {
+
                 console.log(
                     `Latest Version: ${result.latestVersion}`
                 );
@@ -78,8 +88,11 @@ program
             console.error("\n❌ Error:");
 
             if (error instanceof Error) {
+
                 console.error(error.message);
+
             } else {
+
                 console.error(error);
             }
         }
@@ -137,8 +150,11 @@ program
             );
 
             if (error instanceof Error) {
+
                 console.error(error.message);
+
             } else {
+
                 console.error(error);
             }
         }
@@ -165,7 +181,6 @@ program
             const results =
                 await scanProject(projectPath);
 
-
             console.log(
                 "\n========== SLOPGUARD REPORT ==========\n"
             );
@@ -182,15 +197,16 @@ program
                 if (
                     result.verdict === "SAFE"
                 ) {
+
                     verdictIcon = "✅";
 
                 } else if (
                     result.verdict ===
                     "CONFIRMED_HALLUCINATED"
                 ) {
+
                     verdictIcon = "🚨";
                 }
-
 
                 console.log(
                     `${verdictIcon} ${result.packageName}`
@@ -233,44 +249,40 @@ program
             // CALCULATE SUMMARY
             // ------------------------------------------
 
-            const safeCount = results.filter(
-                (result) =>
-                    result.verdict === "SAFE"
-            ).length;
+            const safeCount =
+                results.filter(
+                    (result) =>
+                        result.verdict === "SAFE"
+                ).length;
 
+            const suspiciousCount =
+                results.filter(
+                    (result) =>
+                        result.verdict === "SUSPICIOUS"
+                ).length;
 
-            const suspiciousCount = results.filter(
-                (result) =>
-                    result.verdict === "SUSPICIOUS"
-            ).length;
+            const hallucinatedCount =
+                results.filter(
+                    (result) =>
+                        result.verdict ===
+                        "CONFIRMED_HALLUCINATED"
+                ).length;
 
-
-            const hallucinatedCount = results.filter(
-                (result) =>
-                    result.verdict ===
-                    "CONFIRMED_HALLUCINATED"
-            ).length;
-
-
-            const total = results.length;
+            const total =
+                results.length;
 
 
             // ------------------------------------------
             // SECURITY SCORE
-            //
-            // SAFE → no penalty
-            // SUSPICIOUS → -25 points
-            // CONFIRMED HALLUCINATED → -50 points
             // ------------------------------------------
 
             let securityScore = 100;
 
-            securityScore -= suspiciousCount * 25;
+            securityScore -=
+                suspiciousCount * 25;
 
-            securityScore -= hallucinatedCount * 50;
-
-
-            // Prevent score below 0
+            securityScore -=
+                hallucinatedCount * 50;
 
             securityScore = Math.max(
                 0,
@@ -338,7 +350,6 @@ program
                 "\n================================\n"
             );
 
-
         } catch (error) {
 
             console.error(
@@ -375,13 +386,18 @@ program
 
 
         // SAFE = 1
-        if (normalizedStatus === "safe") {
+
+        if (
+            normalizedStatus === "safe"
+        ) {
 
             statusCode = 1;
 
         }
 
+
         // CONFIRMED_HALLUCINATED = 2
+
         else if (
             normalizedStatus === "hallucinated"
         ) {
@@ -389,6 +405,7 @@ program
             statusCode = 2;
 
         }
+
 
         else {
 
@@ -449,6 +466,304 @@ program
             if (error instanceof Error) {
 
                 console.error(error.message);
+
+            } else {
+
+                console.error(error);
+            }
+        }
+    });
+
+
+// ==================================================
+// SUGGEST COMMAND
+// ==================================================
+
+program
+    .command("suggest <packageName>")
+    .description(
+        "Suggest and verify alternative packages using GenAI"
+    )
+    .action(async (packageName) => {
+
+        console.log(
+            `\n🧠 Generating alternatives for "${packageName}"...\n`
+        );
+
+
+        try {
+
+            // ------------------------------------------
+            // STEP 1: GENERATE AI SUGGESTIONS
+            // ------------------------------------------
+
+            const aiResult =
+                await suggestAlternatives(
+                    packageName
+                );
+
+
+            console.log(
+                "========== AI ANALYSIS ==========\n"
+            );
+
+            console.log(
+                `Package: ${packageName}`
+            );
+
+            console.log(
+                `\nInferred Purpose:\n${aiResult.inferredPurpose}`
+            );
+
+            console.log(
+                "\nCandidate Alternatives:"
+            );
+
+
+            aiResult.alternatives.forEach(
+                (alternative, index) => {
+
+                    console.log(
+                        `${index + 1}. ${alternative.name}`
+                    );
+
+                    console.log(
+                        `   ${alternative.reason}`
+                    );
+                }
+            );
+
+
+            // ------------------------------------------
+            // STEP 2: VERIFY AI SUGGESTIONS
+            // ------------------------------------------
+
+            console.log(
+                "\n🔐 Verifying alternatives with SlopGuard...\n"
+            );
+
+
+            const verifiedResult =
+                await verifyAlternatives(
+                    aiResult
+                );
+
+
+            // ------------------------------------------
+            // STEP 3: VERIFIED ALTERNATIVES
+            // ------------------------------------------
+
+            console.log(
+                "\n========== SLOPGUARD VERIFICATION ==========\n"
+            );
+
+
+            // ==========================================
+            // SAFE ALTERNATIVES
+            // ==========================================
+
+            console.log(
+                "✅ VERIFIED ALTERNATIVES\n"
+            );
+
+
+            if (
+                verifiedResult.safeAlternatives.length === 0
+            ) {
+
+                console.log(
+                    "No safe alternatives were verified.\n"
+                );
+
+            } else {
+
+                verifiedResult.safeAlternatives.forEach(
+                    (alternative, index) => {
+
+                        const analysis =
+                            alternative.analysis;
+
+
+                        console.log(
+                            `${index + 1}. ${alternative.name}`
+                        );
+
+                        console.log(
+                            `   Reason: ${alternative.reason}`
+                        );
+
+                        console.log(
+                            `   Verdict: ${analysis.verdict}`
+                        );
+
+                        console.log(
+                            `   npm: FOUND`
+                        );
+
+                        console.log(
+                            `   Latest Version: ${
+                                analysis.latestVersion ??
+                                "N/A"
+                            }`
+                        );
+
+                        console.log(
+                            `   Blockchain: ${analysis.blockchainStatus}`
+                        );
+
+                        console.log(
+                            "-----------------------------------"
+                        );
+                    }
+                );
+            }
+
+
+            // ==========================================
+            // SUSPICIOUS ALTERNATIVES
+            // ==========================================
+
+            console.log(
+                "\n⚠️ SUSPICIOUS ALTERNATIVES\n"
+            );
+
+
+            if (
+                verifiedResult.suspiciousAlternatives.length === 0
+            ) {
+
+                console.log(
+                    "None.\n"
+                );
+
+            } else {
+
+                verifiedResult.suspiciousAlternatives.forEach(
+                    (alternative, index) => {
+
+                        const analysis =
+                            alternative.analysis;
+
+
+                        console.log(
+                            `${index + 1}. ${alternative.name}`
+                        );
+
+                        console.log(
+                            `   Reason: ${alternative.reason}`
+                        );
+
+                        console.log(
+                            `   Verdict: ${analysis.verdict}`
+                        );
+
+                        console.log(
+                            `   npm: ${
+                                analysis.npmExists
+                                    ? "FOUND"
+                                    : "NOT FOUND"
+                            }`
+                        );
+
+                        console.log(
+                            `   Blockchain: ${analysis.blockchainStatus}`
+                        );
+
+                        console.log(
+                            `   ⚠️ ${analysis.message}`
+                        );
+
+                        console.log(
+                            "-----------------------------------"
+                        );
+                    }
+                );
+            }
+
+
+            // ==========================================
+            // CONFIRMED HALLUCINATED
+            // ==========================================
+
+            console.log(
+                "\n🚨 CONFIRMED HALLUCINATED ALTERNATIVES\n"
+            );
+
+
+            if (
+                verifiedResult.hallucinatedAlternatives.length === 0
+            ) {
+
+                console.log(
+                    "None.\n"
+                );
+
+            } else {
+
+                verifiedResult.hallucinatedAlternatives.forEach(
+                    (alternative, index) => {
+
+                        const analysis =
+                            alternative.analysis;
+
+
+                        console.log(
+                            `${index + 1}. ${alternative.name}`
+                        );
+
+                        console.log(
+                            `   Reason: ${alternative.reason}`
+                        );
+
+                        console.log(
+                            `   Verdict: ${analysis.verdict}`
+                        );
+
+                        console.log(
+                            `   npm: ${
+                                analysis.npmExists
+                                    ? "FOUND"
+                                    : "NOT FOUND"
+                            }`
+                        );
+
+                        console.log(
+                            `   Blockchain: ${analysis.blockchainStatus}`
+                        );
+
+                        console.log(
+                            `   🚨 ${analysis.message}`
+                        );
+
+                        console.log(
+                            "-----------------------------------"
+                        );
+                    }
+                );
+            }
+
+
+            console.log(
+                "\n🛡️ SlopGuard independently verified every AI suggestion."
+            );
+
+            console.log(
+                "⚠️ AI suggestions are candidates only; SlopGuard verification is authoritative.\n"
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "\n❌ Failed to generate alternatives:"
+            );
+
+
+            if (error instanceof Error) {
+
+                console.error(
+                    error.message
+                );
 
             } else {
 
