@@ -7,7 +7,7 @@ AI coding assistants sometimes recommend npm packages that do not exist. Attacke
 SlopGuard combines a **live npm lookup** with a **persistent on-chain verdict** (a Solidity smart contract), so suspicious names can be reported, verified and re-checked by anyone, with a tamper-evident history.
 
 > BCSE329 Blockchain and Distributed Ledger Technology: course project (demo).
-> Team: Sujal Agarwal (23BKT0109), Radhika Agarwal (23BKT0078). Guide: Dr. Sivaranjani A.
+> Team: Sujal Agarwal (23BKT0109), Radhika Agarwal (23BKT0078), Pritom Saha(23BCE2313). Guide: Dr. Sivaranjani A.
 
 ---
 
